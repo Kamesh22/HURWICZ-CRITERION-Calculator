@@ -1,0 +1,49 @@
+<html>
+<head>
+<style>
+		.button {
+		  background-color: #4CAF50;
+		  border: none;
+		  color: white;
+		  padding: 15px 32px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  font-size: 16px;
+		  margin: 4px 2px;
+		  cursor: pointer;
+		}
+		</style>
+</head>
+<body style="background-color:#faf0fc;">
+
+<h1 style="color:blue; text-align:center;">To see whether decision-maker is optimistic or pessimistic </h1>
+	<h3>Enter the degree of optimism (a):<input type="number" name="" id="opt" required></h3>
+	<button class="button" onclick="optimism()">Calculate</button><br/><br><br>
+	<br/><h2 style="color:blue">RESULT:</h2>
+	<div id="h3" style="color:red; font-size:20px;"></div>
+	
+<script>
+function optimism() {
+var a = document.getElementById("opt").value; 
+const a1 = parseFloat(a);
+let a2 = 0.5;
+if(a < 0 || a>1) {
+	alert("The degree of optimism should lies between 0 and 1! Please enter correct value.");
+
+	} 
+	else{
+if(a < a2 ) {
+document.getElementById("h3").innerText = "Decision-maker is pessimistic!";
+} 
+else if (a >a2) {
+document.getElementById("h3").innerText = "Decision-maker is optimistic!";
+}
+else{
+document.getElementById("h3").innerText = "Decision-maker is neutralist!";
+}
+}
+}
+</script>
+</body>
+</html>

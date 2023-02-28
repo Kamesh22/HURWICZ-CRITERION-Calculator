@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+	    Hurwicz calculator
+		</title>
+		
+		<style>
+		.button {
+		  background-color: #4CAF50;
+		  border: none;
+		  color: white;
+		  padding: 15px 32px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  font-size: 16px;
+		  margin: 4px 2px;
+		  cursor: pointer;
+		}
+		</style>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	</head>
+	
+	<body style="background-color:#faf0fc;">
+	<h1 style="color:blue; text-align:center;">Hurwicz Criterion Calculator</h1>
+	<h3>Enter the degree of optimism (a):<input type="number" name="" id="opt" required></h3>
+	<input type="button" value="Calculate (1-a)" onclick="pessimism()"><br><br>
+	<div id="h3" style="color:red; font-size:20px;"></div>
+	<form name="myForm" method="post">
+	<table>
+	<tr><th colspan="2">Enter the values of Maximum and Minimum Payoff:</th></tr><br/>
+	<tr><td>Max. Payoff of A1:</td><td><input type="number" name="pa1"></td></tr>	
+	<tr><td>Max. Payoff of A2:</td><td><input type="number" name="pa2"></td></tr>	
+	<tr><td>Max. Payoff of A3:</td><td><input type="number" name="pa3"></td></tr>
+	
+	<tr><td>Min. Payoff of A1:</td><td><input type="number" name="mi1"></td></tr>	
+	<tr><td>Min. Payoff of A2:</td><td><input type="number" name="mi2"></td></tr>	
+	<tr><td>Min. Payoff of A3:</td><td><input type="number" name="mi3"></td></tr>
+	
+	<!-- input type="submit" value="Submit" -->
+	</table>
+	</form>
+	<br/><br/>
+	<h2 style="color:red">OUTPUT:</h2>
+	<table id ="outtab"  border="8"  BGCOLOR="#fbf2fc"  style="border-collapse:collapse; font-size:20px;">
+	<tr bgcolor="#f0c2ff">
+		<th style="padding:15px" >Action</th><th style="padding:15px" >Max. Payoff</th> <th style="padding:15px">Min. Payoff</th> <th style="padding:15px">Weighted Average</th> 
+		</tr>
+	<tr><td style="padding:15px">A1</td> <td style="padding:15px"></td> <td style="padding:15px"></td> <td style="padding:15px"></td> </tr>
+	<tr><td style="padding:15px">A2</td> <td style="padding:15px"></td> <td style="padding:15px"></td> <td style="padding:15px"></td> </tr>
+	<tr><td style="padding:15px">A3</td> <td style="padding:15px"></td> <td style="padding:15px"></td> <td style="padding:15px"></td> </tr>
+	</table>
+	<br/>
+	<button class="button" onclick="calculate_avg()">Calculate</button><br/>
+	<br/><h2 style="color:red">RESULT:</h2>
+	<div id="r2" style="color:#71048a; font-size:25px;"></div>
+	<script>
+	
+	function pessimism() {
+	var a = +document.getElementById("opt").value; 
+	if(a < 0 || a>1) {
+	alert("The degree of optimism should lies between 0 and 1! Please enter correct value.");
+
+	} 
+	else{
+	var p = parseFloat(1-a).toFixed(2);
+	let res = "The degree of pessimism(1-a) = "+p;
+	document.getElementById("h3").innerText = res;
+	}	
+	}
+	
+	function calculate_avg() {
+	 MA1 = document.myForm.pa1.value;
+	 MA2 = document.myForm.pa2.value;
+	 MA3 = document.myForm.pa3.value;
+	 MI1 = document.myForm.mi1.value;
+	 MI2 = document.myForm.mi2.value;
+	 MI3 = document.myForm.mi3.value;
+	 
+	 var a = +document.getElementById("opt").value; 
+	 document.getElementById("outtab").rows[1].cells[1].innerHTML=MA1;
+	 document.getElementById("outtab").rows[2].cells[1].innerHTML=MA2;
+	 document.getElementById("outtab").rows[3].cells[1].innerHTML=MA3;
+	 document.getElementById("outtab").rows[1].cells[2].innerHTML=MI1;
+	 document.getElementById("outtab").rows[2].cells[2].innerHTML=MI2;
+	 document.getElementById("outtab").rows[3].cells[2].innerHTML=MI3;
+	 
+	 
+	 var p1 = parseFloat(1-a).toFixed(2);
+	 
+	 var wa1 = (MA1*a) + (MI1*p1);
+	 const wa11 = parseFloat(wa1).toFixed(1);
+	 var wa2 = (MA2*a) + (MI2*p1);
+	 const wa22 = parseFloat(wa2).toFixed(1);
+	 var wa3 = (MA3*a) + (MI3*p1);
+	 const wa33 = parseFloat(wa3).toFixed(1);
+	 
+	 document.getElementById("outtab").rows[1].cells[3].innerHTML=wa11;
+	 document.getElementById("outtab").rows[2].cells[3].innerHTML=wa22;
+	 document.getElementById("outtab").rows[3].cells[3].innerHTML=wa33;
+	 
+	 let largest;
+
+		// check the condition
+		if(wa11 >= wa22 && wa11 >= wa33) {
+			largest = wa11;
+			var res1="Since the average for A1 is maximum, it is OPTIMAL."
+			document.getElementById("r2").innerText = res1;
+		}
+		else if (wa22 >= wa11 && wa22 >= wa33) {
+			largest = wa22;
+			var res2="Since the average for A2 is maximum, it is OPTIMAL."
+			document.getElementById("r2").innerText = res2;
+		}
+		else {
+			largest = wa33;
+			var res3="Since the average for A3 is maximum, it is OPTIMAL."
+			document.getElementById("r2").innerText = res3;
+		}
+		
+	 }
+	 </script>
+	 
+	 <br/><br/><br/><br/> <p>&copy; 2022   ||  <em>This webpage is created by <strong>Kamesh.R  19MIS0146 & Jaswanth 19MIS0134</strong></em> &emsp; &emsp; &emsp;<i style="font-size:24px" class="fa">&#xf0e0;</i> kamesh.r2019@gmail.com</p>
+
+	</body>
+</html>
+	
+	
